@@ -139,12 +139,12 @@ class BayesClassifier:
         pp = 0
         pn = 0
 
-        pl = sum(list(self.pos_freqs.values()))
-        nl = sum(list(self.neg_freqs.values()))
+        pl = sum(self.pos_freqs.values())
+        nl = sum(self.neg_freqs.values())
 
         for token in tokens:
-            pp += math.log(self.pos_freqs.get(token, 0) / pl + 1)
-            pn += math.log(self.neg_freqs.get(token, 0) / nl + 1)
+            pp += math.log((self.pos_freqs.get(token, 0) + 1) / pl)
+            pn += math.log((self.neg_freqs.get(token, 0) + 1) / nl)
 
         if pp > pn: return "positive"
         elif pp == pn: return "neutral"
